@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "pug --output-style compressed -o dist/ src/*.pug && stylus src/style.styl -o dist/style.css && npm run build-copy",
+    "build": "pug --output-style compressed -o dist/ src/*.pug && stylus src/style.styl -o dist/style.css && tsc && npm run build-copy",
     "build-watch": "run-p -l \"build-watch:**\"",
     "build-watch:pug": "pug -w --output-style compressed -o dist/ src/*.pug",
     "build-watch:stylus": "stylus -w src/style.styl -o dist/style.css",
