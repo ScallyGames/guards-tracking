@@ -1,0 +1,43 @@
+doctype html
+html(lang="en")
+    head
+        link(rel="stylesheet" type="text/css" href="style.css")
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+        title Haven Tracker
+        link(rel="manifest" href="/manifest.json")
+        script.
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/service-worker.js')
+                .then((registration) => {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch((error) => {
+                    console.error('Service Worker registration failed:', error);
+                });
+            }
+</script>
+    body
+        .input
+            .digits 
+                button.digit 7
+                button.digit 8
+                button.digit 9
+                button.digit 4
+                button.digit 5
+                button.digit 6
+                button.digit 1
+                button.digit 2
+                button.digit 3
+                button.summon *
+                button.digit 0
+                button.skip
+            
+            .preview
+                .initiative-preview
+                button.confirmation &#x2705;
+        .display
+            ul.initiative-entries
+
+        script(src="index.js") 
