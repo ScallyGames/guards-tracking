@@ -8,6 +8,8 @@ window.onload = () => {
     let colorSelectionButton = document.querySelector('.color-selection');
     let initiativeCountLabel = document.querySelector('.initiative-count');
 
+    let lastInitiativeIncrementTimestamp = 0; // this is used to avoid immediate end if double clicked on penultimate entry
+    let endDelayTimeoutMs = 100;
 
     let goBack = () => {
         buttons.forEach(button => {
@@ -111,6 +113,7 @@ window.onload = () => {
             if (activeIndex + 1 < initiativeEntries.children.length) {
                 initiativeEntries.children[activeIndex].classList.remove('active');
                 initiativeEntries.children[activeIndex + 1].classList.add('active');
+                lastInitiativeIncrementTimestamp = Date.now();
             }
         }
         else {
@@ -125,7 +128,11 @@ window.onload = () => {
         let activeIndex = Array.from(initiativeEntries.children).findIndex(x => x.classList.contains('active'));
         let xPercentage = pointerEvent.clientX / window.innerWidth;
 
-        if (xPercentage >= 0.5 && activeIndex == initiativeEntries.children.length - 1) {
+        if (
+            xPercentage >= 0.5 &&
+            activeIndex == initiativeEntries.children.length - 1 &&
+            (Date.now() - lastInitiativeIncrementTimestamp) > endDelayTimeoutMs
+        ) {
             while (initiativeEntries.firstChild) {
                 initiativeEntries.removeChild(initiativeEntries.firstChild);
             }
