@@ -80,10 +80,19 @@ button
 
         &.active 
             border: 8px solid brown;
-        
 
-.confirmation
-    height: 100%;
-    width: 64px;
+.confirmation-group
     flex-shrink: 0;
     margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 64px;
+        
+.confirmation
+    flex-grow: 1;
+
+.initiative-count
+    height: 1.2em;
+    padding: 4px;
+    text-align: center;

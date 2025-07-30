@@ -6,6 +6,8 @@ window.onload = () => {
     let initiativePreview = document.querySelector('.initiative-preview');
     let initiativeEntries = document.querySelector('.initiative-entries');
     let colorSelectionButton = document.querySelector('.color-selection');
+    let initiativeCountLabel = document.querySelector('.initiative-count');
+
 
     let goBack = () => {
         buttons.forEach(button => {
@@ -40,6 +42,7 @@ window.onload = () => {
 
                 initiativeButton.addEventListener('click', () => {
                     initiativeButton.remove();
+                    initiativeCountLabel.innerHTML = initiativePreview.childElementCount.toString();
                 });
 
 
@@ -53,6 +56,8 @@ window.onload = () => {
                 let initiative = parseInt(clickedText);
                 let next = Array.from(initiativePreview.childNodes).find(x => parseInt(x.textContent) < initiative) || null
                 initiativePreview.insertBefore(initiativeButton, next);
+
+                initiativeCountLabel.innerHTML = initiativePreview.childElementCount.toString();
                 toggleColor();
                 goBack();
             }
@@ -87,6 +92,7 @@ window.onload = () => {
         while (initiativePreview.firstChild) {
             initiativePreview.removeChild(initiativePreview.firstChild);
         }
+        initiativeCountLabel.innerHTML = initiativePreview.childElementCount.toString();
 
         initiativeEntries.children[0].classList.add('active')
 
