@@ -97,13 +97,29 @@ window.onload = () => {
         toggleColor();
     })
 
-    initiativeEntries.addEventListener('click', () => {
+    initiativeEntries.addEventListener('click', (pointerEvent: PointerEvent) => {
         let activeIndex = Array.from(initiativeEntries.children).findIndex(x => x.classList.contains('active'));
-        initiativeEntries.children[activeIndex].classList.remove('active');
-        if (activeIndex + 1 < initiativeEntries.children.length) {
-            initiativeEntries.children[activeIndex + 1].classList.add('active');
+        let xPercentage = pointerEvent.clientX / window.innerWidth;
+
+        if (xPercentage >= 0.5) {
+            if (activeIndex + 1 < initiativeEntries.children.length) {
+                initiativeEntries.children[activeIndex].classList.remove('active');
+                initiativeEntries.children[activeIndex + 1].classList.add('active');
+            }
         }
         else {
+            if (activeIndex - 1 >= 0) {
+                initiativeEntries.children[activeIndex].classList.remove('active');
+                initiativeEntries.children[activeIndex - 1].classList.add('active');
+            }
+        }
+    });
+
+    initiativeEntries.addEventListener('dblclick', (pointerEvent: PointerEvent) => {
+        let activeIndex = Array.from(initiativeEntries.children).findIndex(x => x.classList.contains('active'));
+        let xPercentage = pointerEvent.clientX / window.innerWidth;
+
+        if (xPercentage >= 0.5 && activeIndex == initiativeEntries.children.length - 1) {
             while (initiativeEntries.firstChild) {
                 initiativeEntries.removeChild(initiativeEntries.firstChild);
             }
