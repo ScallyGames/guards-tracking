@@ -1,15 +1,18 @@
 doctype html
 html(lang="en")
     head
+        if BASE_URL
+            base(href=BASE_URL)
+            link(rel="canonical" href=BASE_URL)
         link(rel="stylesheet" type="text/css" href="style.css")
         meta(charset="UTF-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
         title Guards Tracker
-        link(rel="manifest" href="/manifest.json")
+        link(rel="manifest" href="manifest.json")
         script.
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/service-worker.js')
+                navigator.serviceWorker.register('#{BASE_URL}service-worker.js')
                 .then((registration) => {
                     console.log('Service Worker registered with scope:', registration.scope);
                 })
