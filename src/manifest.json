@@ -2,7 +2,7 @@
     "name": "Guards Tracker",
     "short_name": "Guards Tracker",
     "description": "An app for tracking initiative for Guards",
-    "start_url": "/",
+    "start_url": "/guards-tracker/",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#000000",
