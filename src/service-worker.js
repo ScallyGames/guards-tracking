@@ -1,7 +1,7 @@
 // service-worker.js
 self.addEventListener('install', (event) => {
     event.waitUntil(
-        caches.open('haven-tracker-app-cache').then((cache) => {
+        caches.open('guards-tracker-app-cache').then((cache) => {
             return cache.addAll([
                 '/',
                 '/index.html',

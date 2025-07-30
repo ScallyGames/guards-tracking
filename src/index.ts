@@ -1,62 +1,67 @@
 
-window.onload = () =>
-{
+window.onload = () => {
     let buttons = document.querySelectorAll('.digit');
     let skipButton = document.querySelector('.skip');
-    let summonButton = document.querySelector('.summon');
     let confirmationButton = document.querySelector('.confirmation');
     let initiativePreview = document.querySelector('.initiative-preview');
     let initiativeEntries = document.querySelector('.initiative-entries');
+    let colorSelectionButton = document.querySelector('.color-selection');
 
-    let goBack = () =>
-    {
-        buttons.forEach(button => 
-        {
+    let goBack = () => {
+        buttons.forEach(button => {
             button.textContent = button.textContent[1];
         });
         document.querySelector('.skip').textContent = '';
     }
 
-    buttons.forEach((clickedButton) =>
-    {
-        clickedButton.addEventListener('click', () => 
-        {
+    let toggleColor = () => {
+        if (colorSelectionButton.classList.contains('orange')) {
+            colorSelectionButton.classList.remove('orange');
+            colorSelectionButton.classList.add('blue');
+        }
+        else {
+            colorSelectionButton.classList.remove('blue');
+            colorSelectionButton.classList.add('orange');
+        }
+    }
+
+    buttons.forEach((clickedButton) => {
+        clickedButton.addEventListener('click', () => {
             let clickedText = clickedButton.textContent;
-            if(clickedButton.textContent.length == 1)
-            {
-                buttons.forEach(button => 
-                {
+            if (clickedButton.textContent.length == 1) {
+                buttons.forEach(button => {
                     button.textContent = clickedText + button.textContent;
                 });
                 document.querySelector('.skip').textContent = '<-';
             }
-            else
-            {
+            else {
                 let initiativeButton = document.createElement('button');
                 initiativeButton.innerText = clickedText;
-                initiativeButton.addEventListener('click', () =>
-                {
+
+                initiativeButton.addEventListener('click', () => {
                     initiativeButton.remove();
                 });
-                if(summonButton.classList.contains('active'))
-                {
-                    initiativeButton.classList.add('with-summon');
+
+
+                if (colorSelectionButton.classList.contains('blue')) {
+                    initiativeButton.classList.add('blue');
                 }
-                initiativeButton.classList
+                if (colorSelectionButton.classList.contains('orange')) {
+                    initiativeButton.classList.add('orange');
+                }
+
                 let initiative = parseInt(clickedText);
-                let next = Array.from(initiativePreview.childNodes).find(x => parseInt(x.textContent) > initiative) || null
+                let next = Array.from(initiativePreview.childNodes).find(x => parseInt(x.textContent) < initiative) || null
                 initiativePreview.insertBefore(initiativeButton, next);
-                summonButton.classList.remove('active');
+                toggleColor();
                 goBack();
             }
         });
     });
 
-    
-    skipButton.addEventListener('click', () =>
-    {
-        switch (skipButton.textContent)
-        {
+
+    skipButton.addEventListener('click', () => {
+        switch (skipButton.textContent) {
             case '':
                 break;
             case '<-':
@@ -65,22 +70,21 @@ window.onload = () =>
         }
     });
 
-    summonButton.addEventListener('click', () =>
-    {
-        summonButton.classList.toggle('active');
-    });
 
-    confirmationButton.addEventListener('click', () =>
-    {
-        Array.from(initiativePreview.children).forEach(previewEntry => 
-        {
+    confirmationButton.addEventListener('click', () => {
+        Array.from(initiativePreview.children).forEach(previewEntry => {
             let initiativeEntry = document.createElement('li');
             initiativeEntry.innerText = previewEntry.textContent;
             initiativeEntries.appendChild(initiativeEntry);
+            if (previewEntry.classList.contains('orange')) {
+                initiativeEntry.classList.add('orange')
+            }
+            if (previewEntry.classList.contains('blue')) {
+                initiativeEntry.classList.add('blue')
+            }
         })
 
-        while (initiativePreview.firstChild) 
-        {
+        while (initiativePreview.firstChild) {
             initiativePreview.removeChild(initiativePreview.firstChild);
         }
 
@@ -89,19 +93,18 @@ window.onload = () =>
         document.body.classList.add('combat-round');
     });
 
-    initiativeEntries.addEventListener('click', () => 
-    {
-        console.log('clicked');
+    colorSelectionButton.addEventListener('click', () => {
+        toggleColor();
+    })
+
+    initiativeEntries.addEventListener('click', () => {
         let activeIndex = Array.from(initiativeEntries.children).findIndex(x => x.classList.contains('active'));
         initiativeEntries.children[activeIndex].classList.remove('active');
-        if(activeIndex + 1 < initiativeEntries.children.length)
-        {
+        if (activeIndex + 1 < initiativeEntries.children.length) {
             initiativeEntries.children[activeIndex + 1].classList.add('active');
         }
-        else
-        {
-            while (initiativeEntries.firstChild) 
-            {
+        else {
+            while (initiativeEntries.firstChild) {
                 initiativeEntries.removeChild(initiativeEntries.firstChild);
             }
             document.body.classList.remove('combat-round');
